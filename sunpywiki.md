@@ -33,4 +33,35 @@ usgs.getUSGSnwis(stationids, starttime, endtime, ncfile)
 #### NARR Weather Model Data
 Joe cannot currently get the NARR functionality to work.
 
+#### NOAA IOOS Data
+NOAA IOOS Data measurements within a specified box can be taken from the internet, with a specified Lat/Long cooridinate boundaries and a time frame.
+
+```python
+from datetime import datetime
+import netcdfio
+from getNOAAIOOSopendap import extractIOOS
+
+startt = "201001"
+endt = "201002"
+latlon = [-95.60, -93.7, 28.8, 30]
+varlist = ['waterlevel', 'conductivity', 'watertemp', 'airtemp',
+           'airpressure', 'windspeed', 'winddirn']
+ncfile = mydirectory + 'USIOOS_OceanObs_20102011.nc'
+shpfile = mydirectory + 'USIOOS_OceanObs_20102011.shp'
+
+# Extract the data
+data = extractIOOS(varlist, startt, endt, latlon)
+
+# Write to a netcdf file
+globalatts = {'title': 'US-IOOS oceanographic observation data',
+              'history': 'Created on ' + datetime.ctime(datetime.now()),
+              'source': 'http://opendap.co-ops.nos.noaa.gov/dods/IOOS/'}
+
+datetime.ctime
+netcdfio.writePointData2Netcdf(ncfile, data, globalatts)
+
+# Write the metadata to a shapefile
+netcdfio.pointNC2shp(ncfile, shpfile)
+```
+
 
