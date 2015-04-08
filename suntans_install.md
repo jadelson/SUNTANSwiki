@@ -22,6 +22,8 @@ OR
 * Download latest version of NetCDF http://www.unidata.ucar.edu/downloads/netcdf/current/index.jsp
 * Unpack, go into the directory and execute:
  
+    sudo apt-get libnetcdf-bin libnetcdf-devatl
+
 
     LDFLAGS=-L/usr/local/lib CPPFLAGS=-I/usr/local/include ./configure --enable-netcdf-4 --enable-dap --enable-shared --prefix=/usr/local
     make
